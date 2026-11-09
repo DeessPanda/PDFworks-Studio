@@ -1,16 +1,30 @@
 import os
 import shutil
 from pdfworks_studio.tools import PDFTools
+import pymupdf as fitz
+from pptx import Presentation
+from pptx.util import Inches
 
-test_dir = "/home/deesspanda/Personal Data/1 Clg/Notes/DC/2 & 3"
 output_test_dir = "/tmp/pdfworks_test_output"
 
 if os.path.exists(output_test_dir):
     shutil.rmtree(output_test_dir)
 os.makedirs(output_test_dir, exist_ok=True)
 
-sample_pdf = os.path.join(test_dir, "Magnitude Comparator, Decoder, Encoder, Priority Encoder.pdf")
-sample_pptx = os.path.join(test_dir, "Unit II Combinational Logic Circuits.pptx")
+# Create synthetic sample PDF and PPTX for testing
+sample_pdf = os.path.join(output_test_dir, "sample.pdf")
+doc = fitz.open()
+page = doc.new_page()
+page.insert_text(fitz.Point(100, 100), "PDFWorks Studio Test Document", fontsize=20)
+doc.save(sample_pdf)
+doc.close()
+
+sample_pptx = os.path.join(output_test_dir, "sample.pptx")
+prs = Presentation()
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+tb = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(5), Inches(2))
+tb.text_frame.text = "PDFWorks Studio Presentation Test"
+prs.save(sample_pptx)
 
 print("--- Testing PDFWorks Studio Tools ---")
 
@@ -47,7 +61,7 @@ print("✓ Watermark PDF passed")
 # 5. Extract Images
 print("Testing Extract Images...")
 out_img_dir = os.path.join(output_test_dir, "extracted_imgs")
-images = PDFTools.extract_images(sample_pdf, out_img_dir)
+images = PDFWorks_Studio_images = PDFTools.extract_images(sample_pdf, out_img_dir)
 print(f"✓ Extract Images passed (extracted {len(images)} images)")
 
 # 6. Split PDF
