@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=PDFWorks Studio
+Comment=Free, fast, and secure batch PDF & Office document tools for Linux
+Exec=pdfworks-studio
+Icon=pdfworks-studio
+Categories=Office;Utility;
+Terminal=false
